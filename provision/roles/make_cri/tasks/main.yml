@@ -1,0 +1,24 @@
+---
+- name: Install Docker dependencies
+  apt:
+    name: ["apt-transport-https", "ca-certificates", "curl", "gnupg-agent", "software-properties-common"]
+    state: latest
+
+- name: Add Docker official GPG key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Get OS release
+  shell: lsb_release -cs
+  register: os_release
+
+- name: Add Docker repository into sources list
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ os_release.stdout }} stable"
+    state: present
+
+- name: Install Docker packages
+  apt:
+    name: ["docker-ce", "docker-ce-cli", "containerd.io"]
+    state: latest

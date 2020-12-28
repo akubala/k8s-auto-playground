@@ -1,0 +1,23 @@
+---
+- name: Add Helm official PGP key
+  apt_key:
+    url: "https://baltocdn.com/helm/signing.asc "
+    state: present
+
+- name: Add Helm repository into sources list
+  apt_repository:
+    repo: "deb https://baltocdn.com/helm/stable/debian/ all main"
+    state: present
+
+- name: Install Helm
+  apt:
+    name: helm
+    state: latest
+
+- name: Git clone micro-blog Helm Chart
+  git:
+    repo: "{{ micro_blog_helm_url }}"
+    dest: "{{ micro_blog_helm_path }}"
+
+- name: Deploy micro-blog Helm Chart
+  shell: "helm install {{ helm_chart_name }} {{ micro_blog_helm_path }}"

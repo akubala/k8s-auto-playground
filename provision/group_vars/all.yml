@@ -1,0 +1,10 @@
+---
+master_node_ip: "192.168.1.200"
+pod_network_cidr: "10.1.0.0/16"
+kubeadm_init_msg_file_name: kubeadm-init-msg.txt
+local_project_path: /home/akubala/Work/auto-k8s-playground
+default_kubeconfig_path: $HOME/.kube
+local_kubeconfig_path: .kube
+micro_blog_helm_url: https://github.com/akubala/micro-blog-helm-chart.git
+micro_blog_helm_path: /tmp/helm-chart/app
+helm_chart_name: microblog

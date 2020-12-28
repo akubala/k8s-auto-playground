@@ -1,0 +1,35 @@
+---
+- name: Init cluster
+  shell: "kubeadm init --control-plane-endpoint {{ master_node_ip }} --pod-network-cidr={{ pod_network_cidr }}"
+  register: kubeadm_init_msg
+
+- name: Log init cluster message to file
+  copy:
+    content: "{{ kubeadm_init_msg.stdout }}"
+    dest: "/tmp/{{ kubeadm_init_msg_file_name }}"
+
+- name: Send cluster init message to localhost
+  fetch:
+    src: "/tmp/{{ kubeadm_init_msg_file_name }}"
+    dest: "{{ local_project_path }}/k8s/"
+    flat: yes
+
+- name: Prepare kubeconfig default directory
+  file:
+    path: "{{ default_kubeconfig_path }}"
+    state: directory
+
+- name: Move kubeconfig to default directory
+  copy:
+    remote_src: true
+    src: /etc/kubernetes/admin.conf
+    dest: "{{ default_kubeconfig_path }}/config"
+  environment:
+    KUBECONFIG: "{{ default_kubeconfig_path }}/config"
+
+- name: Send kubeconfig to localhost
+  fetch:
+    src: /etc/kubernetes/admin.conf
+    dest: "{{ local_project_path }}/k8s/{{ local_kubeconfig_path }}/config"
+    flat: yes
+

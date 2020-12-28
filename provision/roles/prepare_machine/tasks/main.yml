@@ -1,0 +1,24 @@
+---
+- name: Update packages repositories and cache
+  apt:
+   update_cache: yes
+
+- name: Disable swap
+  shell: swapoff -a
+
+- name: Remove swap entry from fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
+
+- name: Load br_netfilter module
+  shell: modprobe br_netfilter
+
+- name: Make bridged traffic visible to iptables
+  copy:
+    src: k8s.conf
+    dest: /etc/sysctl.d/k8s.conf
+
+- name: Load new kernel parameters at runtime
+  shell: sysctl --system

@@ -1,0 +1,19 @@
+---
+- name: Add Kubernetes official GPG key
+  apt_key:
+    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+    state: present
+
+- name: Add Kubernetes repository into sources list
+  apt_repository:
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+    filename: kubernetes.list
+
+- name: Install Kubes
+  apt:
+    name: ["kubelet", "kubeadm", "kubectl"]
+    state: latest
+
+- name: Prevent Kubes from being automatically upgraded or removed
+  shell: "apt-mark hold kubelet kubeadm kubectl"

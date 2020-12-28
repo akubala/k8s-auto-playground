@@ -1,0 +1,19 @@
+---
+- name: Send Tigera Operator
+  copy:
+    src: tigera-operator.yaml
+    dest: /tmp/tigera-operator.yaml
+
+- name: Send Calico Custom Resources
+  template:
+    src: tigera-custom-resources.yaml
+    dest: /tmp/tigera-custom-resources.yaml
+
+- name: Install the Tigera Calico operator and custom resource definitions
+  shell: "kubectl create -f /tmp/tigera-operator.yaml"
+
+- name: Create Calico custom resources
+  shell: "kubectl create -f /tmp/tigera-custom-resources.yaml"
+
+- name: Remove the taints on the master so that you can schedule pods on it
+  shell: "kubectl taint nodes --all node-role.kubernetes.io/master-"

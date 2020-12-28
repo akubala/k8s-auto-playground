@@ -1,0 +1,10 @@
+---
+- hosts: master
+  become: true
+  roles:
+    - prepare_machine
+    - make_cri
+    - kubes
+    - init_cluster
+    - make_cni
+    - deploy_app

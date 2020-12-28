@@ -1,0 +1,8 @@
+# Tools
+.vagrant
+*.log
+*.retry
+
+# Project
+.kube
+kubeadm-init-msg.txt
