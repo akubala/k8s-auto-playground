@@ -4,7 +4,7 @@
 
 * Create virtual machine with Vagrant
 * Prepare machine for Kubernetes with Ansible
-* Deploy simple [micro-blog](https://github.com/akubala/micro-blog) python app with Helm
+* Deploy simple [micro-blog](https://github.com/akubala/micro-blog) python app with [Helm chart](https://github.com/akubala/micro-blog-helm-chart)
 
 ## Example usage
 
