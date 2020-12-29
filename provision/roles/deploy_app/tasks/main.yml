@@ -14,10 +14,10 @@
     name: helm
     state: latest
 
-- name: Git clone micro-blog Helm Chart
+- name: Git clone micro-blog Helm chart
   git:
     repo: "{{ micro_blog_helm_url }}"
     dest: "{{ micro_blog_helm_path }}"
 
-- name: Deploy micro-blog Helm Chart
+- name: Deploy micro-blog Helm chart
   shell: "helm install {{ helm_chart_name }} {{ micro_blog_helm_path }}"
