@@ -1,4 +1,4 @@
-# Automation with Kubernetes - playground
+# Kubernetes and automation - playground
 
 **About**
 
